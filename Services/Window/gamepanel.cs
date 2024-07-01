@@ -37,21 +37,17 @@ namespace GameProject.Services.Window
         {
             base.OnPaint(e);
 
-
-
             Graphics gfx = e.Graphics;
             gfx.FillRectangle(Brushes.Black, xDelta, yDelta, 50, 50);
             
             frames++;
 
-            if ( DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastTime > 1000)
+            if (DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastTime > 1000)
             {
                 lastTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-                Console.WriteLine(frames);
+                Console.WriteLine("FPS: " + frames);
                 frames = 0;
             }
-
-            this.Refresh();
         }
     }
 }
