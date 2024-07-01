@@ -132,17 +132,15 @@ namespace GameProject.Services.Window
 
             Graphics g = e.Graphics;
 
-            UpdateAnimationTick();
-
-            SetAnimation();
-            UpdatePosition();
 
             g.DrawImage(animations[animationIndex, playerAction], xDelta, yDelta, width, height);
         }
 
         public void UpdateGame()
         {
-            this.Refresh();
+            UpdateAnimationTick();
+            SetAnimation();
+            UpdatePosition();
         }
     }
 }

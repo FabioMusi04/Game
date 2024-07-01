@@ -85,6 +85,7 @@ namespace GameProject.Services.Game
 
             if (deltaU >= 1)
             {
+               Update();
                updates++;
                deltaU--;
             }
