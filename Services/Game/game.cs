@@ -5,8 +5,8 @@ namespace GameProject.Services.Game
 {
    public class Game
    {
-      private GameWindow window;
-      private GamePanel panel;
+      private readonly GameWindow window;
+      private readonly GamePanel panel;
       public Game()
       {
          panel = new GamePanel();
