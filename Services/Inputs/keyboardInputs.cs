@@ -1,6 +1,6 @@
-using System;
 using System.Windows.Forms;
 using GameProject.Services.Window;
+using static GameProject.Utils.Constants;
 
 namespace GameProject.Services.Inputs
 {
@@ -26,23 +26,37 @@ namespace GameProject.Services.Inputs
             switch (char.ToLower(e.KeyChar))
             {
                 case 'w':
-                    this._gamePanel.changeYDelta(-5);
+                    this._gamePanel.SetDirection(Directions.UP);
                     break;
                 case 'a':
-                    this._gamePanel.changeXDelta(-5);
+                    this._gamePanel.SetDirection(Directions.LEFT);
                     break;
                 case 's':
-                    this._gamePanel.changeYDelta(5);
+                    this._gamePanel.SetDirection(Directions.DOWN);
                     break;
                 case 'd':
-                    this._gamePanel.changeXDelta(5);
+                    this._gamePanel.SetDirection(Directions.RIGHT);
                     break;
             }
         }
 
         private void KeyboardInputs_KeyUp(object sender, KeyEventArgs e)
         {
-            // Handle key up event here
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    this._gamePanel.SetMoving(false);
+                    break;
+                case Keys.A:
+                    this._gamePanel.SetMoving(false);
+                    break;
+                case Keys.S:
+                    this._gamePanel.SetMoving(false);
+                    break;
+                case Keys.D:
+                    this._gamePanel.SetMoving(false);
+                    break;
+            }
         }
     }
 }

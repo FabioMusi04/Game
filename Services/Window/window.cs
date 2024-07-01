@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using GameProject.Services.Game;
 
 namespace GameProject.Services.Window
 {
@@ -10,32 +11,31 @@ namespace GameProject.Services.Window
         public GameWindow(GamePanel gamePanel)
         {
             CreateWindow(gamePanel);
-            Application.EnableVisualStyles();
-            Application.Run(form);
         }
 
         [STAThread]
         public void CreateWindow(GamePanel gamePanel)
         {
-            form = new Form
+            this.form = new Form
             {
                 Text = "Game",
-                Size = new Size(400, 400),
-                FormBorderStyle = FormBorderStyle.Sizable,
-                MaximizeBox = true,
+                FormBorderStyle = FormBorderStyle.FixedSingle,
+                MaximizeBox = false,
                 MinimizeBox = true,
                 StartPosition = FormStartPosition.CenterScreen
             };
 
-            form.FormClosing += new FormClosingEventHandler(OnFormClosing);
-            form.Shown += (sender, e) =>
+            this.form.FormClosing += new FormClosingEventHandler(OnFormClosing);
+            this.form.Shown += (sender, e) =>
             {
                 gamePanel.Focus();
             };
 
-            form.Controls.Add(gamePanel);
+            this.form.Size = gamePanel.Size;
+            this.form.Controls.Add(gamePanel);
 
-            form.Show();
+            this.form.Show();
+            
             /* form.Paint += new PaintEventHandler(OnPaint);
             form.KeyDown += new KeyEventHandler(OnKeyDown);
             form.KeyUp += new KeyEventHandler(OnKeyUp);
@@ -44,7 +44,7 @@ namespace GameProject.Services.Window
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            Environment.Exit(Environment.ExitCode);
         }
     }
 }

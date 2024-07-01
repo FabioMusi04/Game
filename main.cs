@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using GameProject.Services.Game;
+﻿using GameProject.Services.Game;
 
 namespace GameProject
 {
@@ -8,7 +6,7 @@ namespace GameProject
     {
         static void Main(string[] args)
         {
-            _ = new Game();        
+            _ = new GameSetup();        
         }
     }
 }

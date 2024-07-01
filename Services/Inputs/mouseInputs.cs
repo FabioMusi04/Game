@@ -17,7 +17,6 @@ namespace GameProject.Services.Inputs
         private void MouseInputs_MouseMove(object sender, MouseEventArgs e)
         {
             // Handle mouse down event here
-            this._gamePanel.setRectPosition(e.X, e.Y);
         }
         private void MouseInputs_MouseClick(object sender, MouseEventArgs e)
         {
