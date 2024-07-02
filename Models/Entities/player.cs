@@ -16,7 +16,7 @@ namespace GameProject.Services.Entities
         private int _animationIndex;
         private readonly int _animationSpeed = 30;
         private int _playerAction = PlayerConstants.IDLE_DOWN;
-        private bool _left, _right, _up, _down;
+        private bool _left, _right, _up, _down, _attack;
         private bool _wasLeft, _wasRight, _wasUp, _wasDown;
         private bool _isMoving = false;
 
@@ -79,6 +79,7 @@ namespace GameProject.Services.Entities
                 }
             }
         }
+        public bool Attack { get => _attack; set => _attack = value; }
         private int[,] _lvlData;
 
         public Player(float x, float y, int width, int height) : base(x, y, width, height)
@@ -146,12 +147,14 @@ namespace GameProject.Services.Entities
                 if (this._animationIndex >= PlayerConstants.GetSpriteAmount(this._playerAction))
                 {
                     this._animationIndex = 0;
+                    this._attack = false;
                 }
             }
         }
 
         private void SetAnimation()
         {
+            int startAni = this._playerAction;
             if (_isMoving)
             {
                 if (Left)
@@ -189,6 +192,33 @@ namespace GameProject.Services.Entities
                 {
                     this._playerAction = PlayerConstants.IDLE_UP;
                 }
+            }
+            if(this._attack) {
+                if (this._wasDown)
+                {
+                    this._playerAction = PlayerConstants.ATTACKING_DOWN;
+                }
+                else if (this._wasLeft)
+                {
+                    this._playerAction = PlayerConstants.ATTACKING_LEFT;
+                }
+                else if (this._wasRight)
+                {
+                    this._playerAction = PlayerConstants.ATTACKING_RIGHT;
+                }
+                else if (this._wasUp)
+                {
+                    this._playerAction = PlayerConstants.ATTACKING_UP;
+                }
+                else {
+                    this._playerAction = PlayerConstants.ATTACKING_DOWN;
+                }
+            }
+
+            if (startAni != this._playerAction)
+            {
+                this._animationTick = 0;
+                this._animationIndex = 0;
             }
         }
 

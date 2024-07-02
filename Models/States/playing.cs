@@ -42,8 +42,7 @@ namespace GameProject.Services.States
     {
       if (e.Button == MouseButtons.Left)
       {
-        //this._player.Attack();
-        throw new System.NotImplementedException();
+        this._player.Attack = true;
       }
     }
 

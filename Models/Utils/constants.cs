@@ -22,7 +22,7 @@ namespace GameProject.Utils
             public const int ATTACKING_DOWN = 6;
             public const int ATTACKING_RIGHT = 7;
             public const int ATTACKING_UP = 8;
-            public const int ATTACKING_LEFT = 8;
+            public const int ATTACKING_LEFT = 7;
             public const int DYING_RIGHT = 9;
             public const int DYING_LEFT = 9;
             public static int GetSpriteAmount(int playerAction)
