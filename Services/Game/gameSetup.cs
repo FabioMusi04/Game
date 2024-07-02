@@ -4,6 +4,7 @@ using GameProject.Services.Window;
 using System.Diagnostics;
 using System.Windows.Forms;
 using GameProject.Services.Entities;
+using GameProject.Level;
 
 namespace GameProject.Services.Game
 {
@@ -19,7 +20,15 @@ namespace GameProject.Services.Game
       private const int UPS_TARGET = 200;
 
       private Player player;
+      private LevelManager levelManager;
 
+      public const int TILES_DEAULT_SIZE = 32;
+      public const float SCALE = 1.0f;
+      public const int TILES_IN_WIDTH = 26;
+      public const int TILES_IN_HEIGHT = 14;
+      public const int TILE_SIZE = (int)(TILES_DEAULT_SIZE * SCALE);
+      public const int GAME_WIDTH = TILES_IN_WIDTH * TILE_SIZE;
+      public const int GAME_HEIGHT = TILES_IN_HEIGHT * TILE_SIZE;
       public GameSetup()
       {
          InitClasses();
@@ -34,6 +43,7 @@ namespace GameProject.Services.Game
       private void InitClasses()
       {
          player = new Player(20, 20);
+         levelManager = new LevelManager(this);
       }
 
       private void InitializeUI()
@@ -67,10 +77,12 @@ namespace GameProject.Services.Game
       public void Update()
       {
          player.Update();
+         levelManager.Update();
       }
 
       public void Render(PaintEventArgs e)
       {
+         levelManager.Draw(e);
          player.Render(e);
       }
 

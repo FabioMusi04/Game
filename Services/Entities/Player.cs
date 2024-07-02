@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using static GameProject.Utils.Constants;
+using GameProject.Utils;
 
 namespace GameProject.Services.Entities
 {
@@ -42,8 +43,7 @@ namespace GameProject.Services.Entities
 
         private void LoadAnimations()
         {
-            Bitmap img = new Bitmap("../../../Res/NPC/hero.png");
-
+            Bitmap img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
             animations = new Bitmap[4, 4];
             for (int i = 0; i < animations.GetLength(0); i++)
             {

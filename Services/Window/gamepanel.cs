@@ -20,7 +20,7 @@ namespace GameProject.Services.Window
         }
         private void SetPanelSize()
         {
-            Size size = new(1280, 800);
+            Size size = new(GameSetup.GAME_WIDTH, GameSetup.GAME_HEIGHT);
             this.SetStyle(
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.UserPaint |

@@ -43,11 +43,6 @@ namespace GameProject.Services.Window
             this.form.Controls.Add(gamePanel);
 
             this.form.Show();
-            
-            /* form.Paint += new PaintEventHandler(OnPaint);
-            form.KeyDown += new KeyEventHandler(OnKeyDown);
-            form.KeyUp += new KeyEventHandler(OnKeyUp);
-            form.Show(); */
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
