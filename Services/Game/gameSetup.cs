@@ -21,7 +21,7 @@ namespace GameProject.Services.Game
 
       private Player player;
       private LevelManager levelManager;
-
+   
       public const int TILES_DEAULT_SIZE = 32;
       public const float SCALE = 1.0f;
       public const int TILES_IN_WIDTH = 26;
@@ -82,7 +82,7 @@ namespace GameProject.Services.Game
 
       public void Render(PaintEventArgs e)
       {
-         levelManager.Draw(e);
+         //levelManager.Draw(e);
          player.Render(e);
       }
 
