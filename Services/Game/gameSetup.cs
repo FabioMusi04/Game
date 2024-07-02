@@ -3,6 +3,7 @@ using System.Threading;
 using GameProject.Services.Window;
 using System.Diagnostics;
 using System.Windows.Forms;
+using GameProject.Services.Entities;
 
 namespace GameProject.Services.Game
 {
@@ -11,14 +12,18 @@ namespace GameProject.Services.Game
       private GameWindow window;
       private GamePanel panel;
       private Thread gameThread;
-      private Thread uiThread;
-      private ManualResetEvent uiInitialized = new ManualResetEvent(false);
+      private readonly Thread uiThread;
+      private readonly ManualResetEvent uiInitialized = new(false);
 
       private const int FPS_TARGET = 120;
       private const int UPS_TARGET = 200;
 
+      private Player player;
+
       public GameSetup()
       {
+         InitClasses();
+
          uiThread = new Thread(InitializeUI);
          uiThread.SetApartmentState(ApartmentState.STA);
          uiThread.Start();
@@ -26,9 +31,14 @@ namespace GameProject.Services.Game
          StartGameLoop();
       }
 
+      private void InitClasses()
+      {
+         player = new Player(20, 20);
+      }
+
       private void InitializeUI()
       {
-         panel = new GamePanel();
+         panel = new GamePanel(this);
          window = new GameWindow(panel);
 
          Console.WriteLine("UI Initialized");
@@ -56,7 +66,12 @@ namespace GameProject.Services.Game
 
       public void Update()
       {
-         panel.UpdateGame();
+         player.Update();
+      }
+
+      public void Render(PaintEventArgs e)
+      {
+         player.Render(e);
       }
 
       public void Start()
@@ -109,6 +124,10 @@ namespace GameProject.Services.Game
                updates = 0;
             }
          }
+      }
+      public Player GetPlayer()
+      {
+         return player;
       }
    }
 }

@@ -26,16 +26,16 @@ namespace GameProject.Services.Inputs
             switch (char.ToLower(e.KeyChar))
             {
                 case 'w':
-                    this._gamePanel.SetDirection(Directions.UP);
+                    this._gamePanel.GetGame().GetPlayer().Up = true;
                     break;
                 case 'a':
-                    this._gamePanel.SetDirection(Directions.LEFT);
+                    this._gamePanel.GetGame().GetPlayer().Left = true;
                     break;
                 case 's':
-                    this._gamePanel.SetDirection(Directions.DOWN);
+                    this._gamePanel.GetGame().GetPlayer().Down = true;
                     break;
                 case 'd':
-                    this._gamePanel.SetDirection(Directions.RIGHT);
+                    this._gamePanel.GetGame().GetPlayer().Right = true;
                     break;
             }
         }
@@ -45,16 +45,16 @@ namespace GameProject.Services.Inputs
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    this._gamePanel.SetMoving(false);
+                    this._gamePanel.GetGame().GetPlayer().Up = false;
                     break;
                 case Keys.A:
-                    this._gamePanel.SetMoving(false);
+                    this._gamePanel.GetGame().GetPlayer().Left = false;
                     break;
                 case Keys.S:
-                    this._gamePanel.SetMoving(false);
+                    this._gamePanel.GetGame().GetPlayer().Down = false;
                     break;
                 case Keys.D:
-                    this._gamePanel.SetMoving(false);
+                    this._gamePanel.GetGame().GetPlayer().Right = false;
                     break;
             }
         }

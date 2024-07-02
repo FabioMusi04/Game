@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+
 using GameProject.Services.Game;
 
 namespace GameProject.Services.Window
@@ -25,7 +26,14 @@ namespace GameProject.Services.Window
                 StartPosition = FormStartPosition.CenterScreen
             };
 
+            this.form.Deactivate += (sender, e) =>
+            {
+                Console.WriteLine("Lost focus");
+                gamePanel.GetGame().GetPlayer().ResetDirection();
+            };
+
             this.form.FormClosing += new FormClosingEventHandler(OnFormClosing);
+
             this.form.Shown += (sender, e) =>
             {
                 gamePanel.Focus();
