@@ -4,7 +4,8 @@ using GameProject.Services.Window;
 using System.Diagnostics;
 using System.Windows.Forms;
 using GameProject.Services.Entities;
-using GameProject.Level;
+using GameProject.Services.Levels;
+using GameProject.Services.States;
 
 namespace GameProject.Services.Game
 {
@@ -19,9 +20,9 @@ namespace GameProject.Services.Game
       private const int FPS_TARGET = 120;
       private const int UPS_TARGET = 200;
 
-      private Player player;
-      private LevelManager levelManager;
-   
+      private Playing _playing;
+      private Menu _menu;
+
       public const int TILES_DEAULT_SIZE = 32;
       public const float SCALE = 2.0f;
       public const int TILES_IN_WIDTH = 26;
@@ -42,9 +43,8 @@ namespace GameProject.Services.Game
 
       private void InitClasses()
       {
-         levelManager = new LevelManager(this);
-         player = new Player(200, 200, (int) (48 * SCALE), (int) (48 * SCALE));
-         player.LoadLevelData(levelManager.GetCurrentLevelData().GetLevelData());
+         this._menu = new Menu(this);
+         this._playing = new Playing(this);
       }
 
       private void InitializeUI()
@@ -77,14 +77,32 @@ namespace GameProject.Services.Game
 
       public void Update()
       {
-         player.Update();
-         levelManager.Update();
+         switch (GameStateManager.GameState)
+         {
+            case GameState.PLAYING:
+               this._playing.Update();
+               break;
+            case GameState.MENU:
+               this._menu.Update();
+               break;
+            default:
+               break;
+         }
       }
 
       public void Render(PaintEventArgs e)
       {
-         //levelManager.Draw(e);
-         player.Render(e);
+         switch (GameStateManager.GameState)
+         {
+            case GameState.PLAYING:
+               this._playing.Draw(e.Graphics);
+               break;
+            case GameState.MENU:
+               this._menu.Draw(e.Graphics);
+               break;
+            default:
+               break;
+         }
       }
 
       public void Start()
@@ -138,9 +156,13 @@ namespace GameProject.Services.Game
             }
          }
       }
-      public Player GetPlayer()
+      public Menu GetMenu()
       {
-         return player;
+         return this._menu;
+      }
+      public Playing GetPlaying()
+      {
+         return this._playing;
       }
    }
 }

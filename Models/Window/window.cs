@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using GameProject.Services.Game;
+using GameProject.Services.States;
 
 namespace GameProject.Services.Window
 {
@@ -28,8 +29,8 @@ namespace GameProject.Services.Window
 
             this.form.Deactivate += (sender, e) =>
             {
-                Console.WriteLine("Lost focus");
-                gamePanel.GetGame().GetPlayer().ResetDirection();
+                if (GameStateManager.GameState == GameState.PLAYING)
+                    gamePanel.GetGame().GetPlaying().GetPlayer().ResetDirection();
             };
 
             this.form.FormClosing += new FormClosingEventHandler(OnFormClosing);

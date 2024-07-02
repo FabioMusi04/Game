@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using GameProject.Services.States;
 using GameProject.Services.Window;
 
 namespace GameProject.Services.Inputs
@@ -20,7 +21,18 @@ namespace GameProject.Services.Inputs
         }
         private void MouseInputs_MouseClick(object sender, MouseEventArgs e)
         {
-            // Handle mouse up event here
+            switch (GameStateManager.GameState)
+            {
+                case GameState.MENU:
+                    this._gamePanel.GetGame().GetMenu().MouseClick(sender, e);
+                    break;
+                case GameState.PLAYING:
+                    this._gamePanel.GetGame().GetPlaying().MouseClick(sender, e);
+                    break;
+                default:
+                    break;
+
+            }
         }
 
         

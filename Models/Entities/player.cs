@@ -95,9 +95,8 @@ namespace GameProject.Services.Entities
             SetAnimation();
         }
 
-        public void Render(PaintEventArgs e)
+        public void Render(Graphics g)
         {
-            Graphics g = e.Graphics;
 
             if (this.Left || this._wasLeft)
             {

@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 using GameProject.Services.Window;
-using static GameProject.Utils.Constants;
+using GameProject.Services.States;
 
 namespace GameProject.Services.Inputs
 {
@@ -22,39 +22,30 @@ namespace GameProject.Services.Inputs
 
         private void KeyboardInputs_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Handle key press event here
-            switch (char.ToLower(e.KeyChar))
+            switch (GameStateManager.GameState)
             {
-                case 'w':
-                    this._gamePanel.GetGame().GetPlayer().Up = true;
+                case GameState.MENU:
+                    this._gamePanel.GetGame().GetMenu().KeyPress(sender, e);
                     break;
-                case 'a':
-                    this._gamePanel.GetGame().GetPlayer().Left = true;
+                case GameState.PLAYING:
+                    this._gamePanel.GetGame().GetPlaying().KeyPress(sender, e);
                     break;
-                case 's':
-                    this._gamePanel.GetGame().GetPlayer().Down = true;
-                    break;
-                case 'd':
-                    this._gamePanel.GetGame().GetPlayer().Right = true;
+                default:
                     break;
             }
         }
 
         private void KeyboardInputs_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            switch (GameStateManager.GameState)
             {
-                case Keys.W:
-                    this._gamePanel.GetGame().GetPlayer().Up = false;
+                case GameState.MENU:
+                    this._gamePanel.GetGame().GetMenu().KeyUp(sender, e);
                     break;
-                case Keys.A:
-                    this._gamePanel.GetGame().GetPlayer().Left = false;
+                case GameState.PLAYING:
+                    this._gamePanel.GetGame().GetPlaying().KeyUp(sender, e);
                     break;
-                case Keys.S:
-                    this._gamePanel.GetGame().GetPlayer().Down = false;
-                    break;
-                case Keys.D:
-                    this._gamePanel.GetGame().GetPlayer().Right = false;
+                default:
                     break;
             }
         }

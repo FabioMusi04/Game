@@ -1,4 +1,4 @@
-namespace GameProject.Level {
+namespace GameProject.Services.Levels {
     public class Level {
         private int[,] _levelData;
         public Level(int[,] levelData) {

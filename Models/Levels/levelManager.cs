@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GameProject.Level
+namespace GameProject.Services.Levels
 {
     public class LevelManager
     {
@@ -35,14 +35,14 @@ namespace GameProject.Level
             }
         }
 
-        public void Draw(PaintEventArgs e)
+        public void Draw(Graphics g)
         {
             for (int i = 0; i < GameSetup.TILES_IN_HEIGHT; i++)
             {
                 for (int j = 0; j < GameSetup.TILES_IN_WIDTH; j++)
                 {
                     int spriteIndex = _level.GetSpriteIndex(j, i);
-                    e.Graphics.DrawImage(_levelSprite[spriteIndex], j * GameSetup.TILE_SIZE, i * GameSetup.TILE_SIZE);
+                    g.DrawImage(_levelSprite[spriteIndex], j * GameSetup.TILE_SIZE, i * GameSetup.TILE_SIZE);
                 }
             }
         }
