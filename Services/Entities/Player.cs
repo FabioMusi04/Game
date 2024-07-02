@@ -1,23 +1,27 @@
 using System.Drawing;
 using System.Windows.Forms;
-using static GameProject.Utils.Constants;
 using GameProject.Utils;
-using System;
+using static GameProject.Utils.HelpMethods;
+using static GameProject.Utils.Constants;
+using GameProject.Services.Game;
 
 namespace GameProject.Services.Entities
 {
     public class Player : Entity
     {
         private Bitmap[,] animations;
-        private const int width = 48, height = 48;
-        private const float playerSpeed = 1.5f;
-        private const float playerAcceleration = 1.5f;
-
-        private int animationTick, animationIndex, animationSpeed = 30;
-        private int playerAction = PlayerConstants.IDLE_DOWN;
+        private const float _playerSpeed = 1.5f;
+        //private const float playerAcceleration = 1.5f;
+        private int _animationTick;
+        private int _animationIndex;
+        private readonly int _animationSpeed = 30;
+        private int _playerAction = PlayerConstants.IDLE_DOWN;
         private bool _left, _right, _up, _down;
         private bool _wasLeft, _wasRight, _wasUp, _wasDown;
-        private bool isMoving = false;
+        private bool _isMoving = false;
+
+        private const float _xDrawOffset = 15 * GameSetup.SCALE;
+        private const float _yDrawOffset = 15 * GameSetup.SCALE;
 
         public bool Left
         {
@@ -75,10 +79,13 @@ namespace GameProject.Services.Entities
                 }
             }
         }
+        private int[,] _lvlData;
 
-        public Player(float x, float y) : base(x, y)
+        public Player(float x, float y, int width, int height) : base(x, y, width, height)
         {
             LoadAnimations();
+
+            this.InitHitBox(this._x, this._y, 20 * GameSetup.SCALE, 30 * GameSetup.SCALE);
         }
 
         public void Update()
@@ -94,12 +101,21 @@ namespace GameProject.Services.Entities
 
             if (this.Left || this._wasLeft)
             {
-                g.DrawImage(animations[animationIndex, playerAction], (int)this._x + width, (int)this._y, -width, height);
+                g.DrawImage(animations[this._animationIndex, this._playerAction],
+                (int)(this._bounds.X - _xDrawOffset) + this._width,
+                (int)(this._bounds.Y - _yDrawOffset),
+                -this._width,
+                this._height);
             }
             else
             {
-                g.DrawImage(animations[animationIndex, playerAction], (int)this._x, (int)this._y, width, height);
+                g.DrawImage(animations[this._animationIndex, this._playerAction],
+                (int)(this._bounds.X - _xDrawOffset),
+                (int)(this._bounds.Y - _yDrawOffset),
+                this._width,
+                this._height);
             }
+            DrawHitBox(g);
         }
 
         private void LoadAnimations()
@@ -110,90 +126,110 @@ namespace GameProject.Services.Entities
             {
                 for (int j = 0; j < animations.GetLength(1); j++)
                 {
-                    animations[i, j] = img.Clone(new Rectangle(i * width, j * height, width, height), img.PixelFormat);
+                    animations[i, j] = img.Clone(new Rectangle(i * 48,
+                    j * 48,
+                    48,
+                    48), img.PixelFormat);
                 }
             }
         }
-
+        public void LoadLevelData(int[,] lvlData)
+        {
+            this._lvlData = lvlData;
+        }
         private void UpdateAnimationTick()
         {
-            animationTick++;
-            if (animationTick >= animationSpeed)
+            this._animationTick++;
+            if (this._animationTick >= this._animationSpeed)
             {
-                animationTick = 0;
-                animationIndex++;
-                if (animationIndex >= PlayerConstants.GetSpriteAmount(playerAction))
+                this._animationTick = 0;
+                this._animationIndex++;
+                if (this._animationIndex >= PlayerConstants.GetSpriteAmount(this._playerAction))
                 {
-                    animationIndex = 0;
+                    this._animationIndex = 0;
                 }
             }
         }
 
         private void SetAnimation()
         {
-            if (isMoving)
+            if (_isMoving)
             {
                 if (Left)
                 {
-                    playerAction = PlayerConstants.RUNNING_LEFT;
+                    this._playerAction = PlayerConstants.RUNNING_LEFT;
                 }
                 else if (Right)
                 {
-                    playerAction = PlayerConstants.RUNNING_RIGHT;
+                    this._playerAction = PlayerConstants.RUNNING_RIGHT;
                 }
                 else if (Up)
                 {
-                    playerAction = PlayerConstants.RUNNING_UP;
+                    this._playerAction = PlayerConstants.RUNNING_UP;
                 }
                 else if (Down)
                 {
-                    playerAction = PlayerConstants.RUNNING_DOWN;
+                    this._playerAction = PlayerConstants.RUNNING_DOWN;
                 }
             }
             else
             {
                 if (this._wasDown)
                 {
-                    playerAction = PlayerConstants.IDLE_DOWN;
+                    this._playerAction = PlayerConstants.IDLE_DOWN;
                 }
                 else if (this._wasLeft)
                 {
-                    playerAction = PlayerConstants.IDLE_LEFT;
+                    this._playerAction = PlayerConstants.IDLE_LEFT;
                 }
                 else if (this._wasRight)
                 {
-                    playerAction = PlayerConstants.IDLE_RIGHT;
+                    this._playerAction = PlayerConstants.IDLE_RIGHT;
                 }
                 else if (this._wasUp)
                 {
-                    playerAction = PlayerConstants.IDLE_UP;
+                    this._playerAction = PlayerConstants.IDLE_UP;
                 }
             }
         }
 
         private void UpdatePosition()
         {
-            this.isMoving = false;
+            this._isMoving = false;
+
+            if (!Left && !Right && !Up && !Down)
+            {
+                return;
+            }
+
+            float xSpeed = 0, ySpeed = 0;
 
             if (Left && !Right && !Up && !Down)
             {
-                this._x -= playerSpeed;
-                this.isMoving = true;
+                xSpeed = -_playerSpeed;
             }
             else if (Right && !Left && !Up && !Down)
             {
-                this._x += playerSpeed;
-                this.isMoving = true;
+                xSpeed = +_playerSpeed;
             }
             if (Up && !Down && !Left && !Right)
             {
-                this._y -= playerSpeed;
-                this.isMoving = true;
+                ySpeed = -_playerSpeed;
             }
             if (Down && !Up && !Left && !Right)
             {
-                this._y += playerSpeed;
-                this.isMoving = true;
+                ySpeed = +_playerSpeed;
+            }
+
+            if (CanMoveHere(this._bounds.X + xSpeed,
+            this._bounds.Y,
+            this._bounds.Width,
+            this._bounds.Height,
+            this._lvlData))
+            {
+                this._bounds.X += xSpeed;
+                this._bounds.Y += ySpeed;
+                this._isMoving = true;
             }
         }
         public void ResetDirection()

@@ -23,7 +23,7 @@ namespace GameProject.Services.Game
       private LevelManager levelManager;
    
       public const int TILES_DEAULT_SIZE = 32;
-      public const float SCALE = 1.0f;
+      public const float SCALE = 2.0f;
       public const int TILES_IN_WIDTH = 26;
       public const int TILES_IN_HEIGHT = 14;
       public const int TILE_SIZE = (int)(TILES_DEAULT_SIZE * SCALE);
@@ -42,8 +42,9 @@ namespace GameProject.Services.Game
 
       private void InitClasses()
       {
-         player = new Player(20, 20);
          levelManager = new LevelManager(this);
+         player = new Player(200, 200, (int) (48 * SCALE), (int) (48 * SCALE));
+         player.LoadLevelData(levelManager.GetCurrentLevelData().GetLevelData());
       }
 
       private void InitializeUI()

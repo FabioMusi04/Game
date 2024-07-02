@@ -8,5 +8,9 @@ namespace GameProject.Level {
         public int GetSpriteIndex(int x, int y) {
             return _levelData[y, x];
         }
+
+        public int[,] GetLevelData() {
+            return this._levelData;
+        }
     }
 }
