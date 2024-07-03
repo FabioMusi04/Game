@@ -1,13 +1,15 @@
 using System.Drawing;
 using GameProject.Services.Game;
+using System.Windows.Forms;
+
 
 namespace GameProject.Utils
 {
     public class LoadSave
     {
-        public const string PLAYER_ATLAS = "../../../Res/NPC/hero.png";
-        public const string LEVEL_ATLAS = "../../../Res/NPC/hero.png";
-        public const string LEVEL_1_DATA = "../../../Res/NPC/hero.png";
+        public static string PLAYER_ATLAS = Application.StartupPath.ToString() + @"..\..\..\Res\NPC\hero.png";
+        public static string LEVEL_ATLAS = Application.StartupPath.ToString() + @"..\..\..\Res\NPC\hero.png";
+        public static string LEVEL_1_DATA = Application.StartupPath.ToString() + @"..\..\..\Res\NPC\hero.png";
         public static Bitmap GetSpriteAtlas(string path)
         {
             Bitmap img = new(path);
