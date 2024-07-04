@@ -1,14 +1,16 @@
+using System;
 using GameProject.Services.Game;
 namespace GameProject.Utils
 {
   public class HelpMethods
   {
-    public static bool CanMoveHere(float x, float y, float w, float h, int[,] levelData)
+    public static bool CanMoveHere(float x, float y, float w, float h, int[,] levelData) // fixare
     {
       if(!IsTileSolid(x, y, levelData)){
         if(!IsTileSolid(x + w, y, levelData)){
           if(!IsTileSolid(x, y + h, levelData)){
             if(!IsTileSolid(x + w, y + h, levelData)){
+              Console.WriteLine("Can move here");
               return true;
             }
           }
@@ -27,7 +29,8 @@ namespace GameProject.Utils
       float xIndex = x / GameSetup.TILE_SIZE;
       float yIndex = y / GameSetup.TILE_SIZE;
       int value = levelData[(int)yIndex, (int)xIndex];
-      if(value >= 48 || value < 0 || value != 11) {
+      Console.WriteLine(value);
+      if(value >= 570 || value < 0 || value != 73) {
         return true;
       }
       return false;

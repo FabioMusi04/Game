@@ -1,6 +1,7 @@
 using GameProject.Services.Game;
 using GameProject.Utils;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace GameProject.Services.Levels
     public class LevelManager
     {
         private readonly GameSetup _game;
-        private Bitmap[] _levelSprite;
+        private List<Bitmap> _levelSprite;
 
         private Level _level;
 
@@ -23,16 +24,16 @@ namespace GameProject.Services.Levels
 
         private void ImportOutsideSprites()
         {
-            /* this._levelSprite = new Bitmap[16];
+            this._levelSprite = new List<Bitmap>(570);
             Bitmap img = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 30; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 19; j++)
                 {
-                    int index = i * 4 + j;
-                    this._levelSprite[index] = img.Clone(new Rectangle(j * 32, i * 48, 32, 48), img.PixelFormat);
+                    this._levelSprite.Add(img.Clone(new Rectangle(j * 16, i * 16, 16, 16), img.PixelFormat));
                 }
-            } */
+            }
+            img.Dispose();
         }
 
         public void Draw(Graphics g)
@@ -42,10 +43,12 @@ namespace GameProject.Services.Levels
                 for (int j = 0; j < GameSetup.TILES_IN_WIDTH; j++)
                 {
                     int spriteIndex =  this._level.GetSpriteIndex(j, i);
-                    g.DrawImage(_levelSprite[spriteIndex], j * GameSetup.TILE_SIZE, i * GameSetup.TILE_SIZE);
+                    if (spriteIndex != -1)
+                        g.DrawImage(_levelSprite[spriteIndex], j * GameSetup.TILE_SIZE, i * GameSetup.TILE_SIZE);
                 }
             }
         }
+
         public Level GetCurrentLevelData()
         {
             return this._level;

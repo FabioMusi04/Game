@@ -23,7 +23,7 @@ namespace GameProject.Services.Game
       private Playing _playing;
       private Menu _menu;
 
-      public const int TILES_DEAULT_SIZE = 32;
+      public const int TILES_DEAULT_SIZE = 16;
       public const float SCALE = 2.0f;
       public const int TILES_IN_WIDTH = 32;
       public const int TILES_IN_HEIGHT = 32;
@@ -150,7 +150,7 @@ namespace GameProject.Services.Game
             if (DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastCheck >= 1000)
             {
                lastCheck = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-               Console.WriteLine("FPS: " + frames + " | UPS: " + updates);
+               //Console.WriteLine("FPS: " + frames + " | UPS: " + updates);
                frames = 0;
                updates = 0;
             }
