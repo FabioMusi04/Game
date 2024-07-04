@@ -1,3 +1,6 @@
+using System.Drawing;
+using System.Collections.Generic;
+
 namespace GameProject.Utils
 {
     public class Constants
@@ -36,6 +39,17 @@ namespace GameProject.Utils
                     _ => 0,
                 };
             }
+        }
+
+        public static class MappingColorsToSprites
+        {
+             public static readonly Dictionary<string, Color> SpriteColors = new()
+             {
+                    { "Grass", Color.FromArgb(168, 230, 29) },
+                    { "Water", Color.FromArgb(77, 109, 243) },
+                    { "Player", Color.FromArgb(180, 180, 180) }
+                };
+
         }
     }
 }

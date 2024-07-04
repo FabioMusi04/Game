@@ -25,8 +25,8 @@ namespace GameProject.Services.Game
 
       public const int TILES_DEAULT_SIZE = 32;
       public const float SCALE = 2.0f;
-      public const int TILES_IN_WIDTH = 26;
-      public const int TILES_IN_HEIGHT = 14;
+      public const int TILES_IN_WIDTH = 32;
+      public const int TILES_IN_HEIGHT = 32;
       public const int TILE_SIZE = (int)(TILES_DEAULT_SIZE * SCALE);
       public const int GAME_WIDTH = TILES_IN_WIDTH * TILE_SIZE;
       public const int GAME_HEIGHT = TILES_IN_HEIGHT * TILE_SIZE;

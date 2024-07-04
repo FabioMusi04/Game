@@ -23,7 +23,7 @@ namespace GameProject.Services.Levels
 
         private void ImportOutsideSprites()
         {
-            this._levelSprite = new Bitmap[16];
+            /* this._levelSprite = new Bitmap[16];
             Bitmap img = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
             for (int i = 0; i < 4; i++)
             {
@@ -32,7 +32,7 @@ namespace GameProject.Services.Levels
                     int index = i * 4 + j;
                     this._levelSprite[index] = img.Clone(new Rectangle(j * 32, i * 48, 32, 48), img.PixelFormat);
                 }
-            }
+            } */
         }
 
         public void Draw(Graphics g)
@@ -41,7 +41,7 @@ namespace GameProject.Services.Levels
             {
                 for (int j = 0; j < GameSetup.TILES_IN_WIDTH; j++)
                 {
-                    int spriteIndex = _level.GetSpriteIndex(j, i);
+                    int spriteIndex =  this._level.GetSpriteIndex(j, i);
                     g.DrawImage(_levelSprite[spriteIndex], j * GameSetup.TILE_SIZE, i * GameSetup.TILE_SIZE);
                 }
             }
