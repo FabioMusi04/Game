@@ -5,78 +5,67 @@ namespace GameProject.Utils
 {
   public class HelpMethods
   {
-public static bool CanMoveHere(float x, float y, float w, float h, int[,] levelData, float currentX, float currentY, float dx, float dy)
-{
-    int tileSize = GameSetup.TILE_SIZE;
-
-    // Function to check if a given point is inside a solid tile
-    bool IsSolidTile(float px, float py)
+    public static bool CanMoveHere(float x, float y, float w, float h, int[,] levelData, int direction)
     {
-        int tileX = (int)(px / tileSize);
-        int tileY = (int)(py / tileSize);
+      int tileSize = GameSetup.TILE_SIZE;
 
-        // Check if the tile coordinates are within the level bounds
+      bool IsSolidTile(int tileX, int tileY)
+      {
         if (tileX < 0 || tileY < 0 || tileX >= levelData.GetLength(1) || tileY >= levelData.GetLength(0))
         {
-            return false;
+          return true;
         }
 
-        return levelData[tileY, tileX] == 1; // Assuming 1 represents a solid tile
-    }
-
-    // Function to check if moving away from a solid tile
-    bool IsMovingAway(float px, float py)
-    {
-        int tileX = (int)(px / tileSize);
-        int tileY = (int)(py / tileSize);
-
-        if (tileX < 0 || tileY < 0 || tileX >= levelData.GetLength(1) || tileY >= levelData.GetLength(0))
-        {
-            return false;
-        }
-
-        return (dx > 0 && px < currentX) || (dx < 0 && px > currentX) || (dy > 0 && py < currentY) || (dy < 0 && py > currentY);
-    }
-
-    // Check all four corners of the bounding box
-    bool topLeft = IsSolidTile(x, y);
-    bool topRight = IsSolidTile(x + w, y);
-    bool bottomLeft = IsSolidTile(x, y + h);
-    bool bottomRight = IsSolidTile(x + w, y + h);
-
-    if (topLeft || topRight || bottomLeft || bottomRight)
-    {
-        // Check if moving away from solid tiles
-        if ((topLeft && IsMovingAway(x, y)) || 
-            (topRight && IsMovingAway(x + w, y)) || 
-            (bottomLeft && IsMovingAway(x, y + h)) || 
-            (bottomRight && IsMovingAway(x + w, y + h)))
-        {
-            return true;
-        }
-        
-        return false;
-    }
-
-    return true;
-}
-
-
-    private static bool IsTileSolid(float x, float y, int[,] levelData)
-    {
-      if (x < 0 || y < 0 || x >= GameSetup.GAME_WIDTH || y >= GameSetup.GAME_HEIGHT)
-      {
-        return true;
+        int value = levelData[tileY, tileX];
+        return value >= 570 || value < 0 || value != 73;
       }
 
-      float xIndex = x / GameSetup.TILE_SIZE;
-      float yIndex = y / GameSetup.TILE_SIZE;
-      int value = levelData[(int)yIndex, (int)xIndex];
-      if (value >= 570 || value < 0 || value != 73)
+      if (direction == Constants.Directions.UP)
       {
-        return true;
+        int topTile = (int)(y / tileSize);
+        for (int tileX = (int)(x / tileSize); tileX <= (int)((x + w) / tileSize); tileX++)
+        {
+          if (IsSolidTile(tileX, topTile))
+          {
+            return false;
+          }
+        }
       }
-      return false;
+      else if (direction == Constants.Directions.DOWN)
+      {
+        int bottomTile = (int)((y + h) / tileSize);
+        for (int tileX = (int)(x / tileSize); tileX <= (int)((x + w) / tileSize); tileX++)
+        {
+          if (IsSolidTile(tileX, bottomTile))
+          {
+            return false;
+          }
+        }
+      }
+      else if (direction == Constants.Directions.LEFT)
+      {
+        int leftTile = (int)(x / tileSize);
+        for (int tileY = (int)(y / tileSize); tileY <= (int)((y + h) / tileSize); tileY++)
+        {
+          if (IsSolidTile(leftTile, tileY))
+          {
+            return false;
+          }
+        }
+      }
+      else if (direction == Constants.Directions.RIGHT)
+      {
+        int rightTile = (int)((x + w) / tileSize);
+        for (int tileY = (int)(y / tileSize); tileY <= (int)((y + h) / tileSize); tileY++)
+        {
+          if (IsSolidTile(rightTile, tileY))
+          {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
   }
 }

@@ -28,10 +28,6 @@ namespace GameProject.Services.Entities
         {
             this._bounds = new RectangleF(x, y, width, height);
         }
-        /*  protected void UpdateHitBox() {
-             this._bounds.X = (int)this._x;
-             this._bounds.Y = (int)this._y;
-         } */
 
         public RectangleF GetBounds()
         {

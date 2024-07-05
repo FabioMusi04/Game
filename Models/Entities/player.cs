@@ -4,6 +4,7 @@ using GameProject.Utils;
 using static GameProject.Utils.HelpMethods;
 using static GameProject.Utils.Constants;
 using GameProject.Services.Game;
+using System;
 
 namespace GameProject.Services.Entities
 {
@@ -85,8 +86,7 @@ namespace GameProject.Services.Entities
         public Player(float x, float y, int width, int height) : base(x, y, width, height)
         {
             LoadAnimations();
-
-            this.InitHitBox(this._x, this._y, 20 * GameSetup.SCALE, 30 * GameSetup.SCALE);
+            this.InitHitBox(this._x, this._y, 16 * GameSetup.SCALE, 32 * GameSetup.SCALE);
         }
 
         public void Update()
@@ -250,15 +250,15 @@ namespace GameProject.Services.Entities
                 ySpeed = +_playerSpeed;
             }
 
+            int dir = Left ? Constants.Directions.LEFT : Right ? Constants.Directions.RIGHT : Up ? Constants.Directions.UP : Constants.Directions.DOWN;
+
             if (CanMoveHere(this._bounds.X + xSpeed,
-            this._bounds.Y,
+            this._bounds.Y + ySpeed,
             this._bounds.Width,
             this._bounds.Height,
             this._lvlData,
-            this._bounds.X,
-            this._bounds.Y,
-            xSpeed,
-            ySpeed))
+            dir
+            ))
             {
                 this._bounds.X += xSpeed;
                 this._bounds.Y += ySpeed;
