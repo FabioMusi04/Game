@@ -22,6 +22,7 @@ namespace GameProject.Services.Game
 
       private Playing _playing;
       private Menu _menu;
+      private Pause _pause;
 
       public const int TILES_DEAULT_SIZE = 16;
       public const float SCALE = 1.0f;
@@ -44,6 +45,7 @@ namespace GameProject.Services.Game
       private void InitClasses()
       {
          this._menu = new Menu(this);
+         this._pause = new Pause(this);
          this._playing = new Playing(this);
       }
 
@@ -85,6 +87,9 @@ namespace GameProject.Services.Game
             case GameState.MENU:
                this._menu.Update();
                break;
+            case GameState.PAUSED:
+               this._pause.Update();
+               break;
             default:
                break;
          }
@@ -99,6 +104,9 @@ namespace GameProject.Services.Game
                break;
             case GameState.MENU:
                this._menu.Draw(e.Graphics);
+               break;
+            case GameState.PAUSED:
+               this._pause.Draw(e.Graphics);
                break;
             default:
                break;
@@ -150,7 +158,7 @@ namespace GameProject.Services.Game
             if (DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastCheck >= 1000)
             {
                lastCheck = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-               //Console.WriteLine("FPS: " + frames + " | UPS: " + updates);
+               Console.WriteLine("FPS: " + frames + " | UPS: " + updates);
                frames = 0;
                updates = 0;
             }
@@ -163,6 +171,10 @@ namespace GameProject.Services.Game
       public Playing GetPlaying()
       {
          return this._playing;
+      }
+      public Pause GetPause()
+      {
+         return this._pause;
       }
    }
 }

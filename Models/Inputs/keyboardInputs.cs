@@ -30,6 +30,9 @@ namespace GameProject.Services.Inputs
                 case GameState.PLAYING:
                     this._gamePanel.GetGame().GetPlaying().KeyPress(sender, e);
                     break;
+                case GameState.PAUSED:
+                    this._gamePanel.GetGame().GetPause().KeyPress(sender, e);
+                    break;
                 default:
                     break;
             }

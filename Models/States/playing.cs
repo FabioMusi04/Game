@@ -78,10 +78,10 @@ namespace GameProject.Services.States
           this._player.Right = true;
           break;
         case (char)8:
-          GameStateManager.GameState = GameState.MENU;
+          GameStateManager.GameState = GameState.PAUSED;
           break;
         case (char)27:
-          GameStateManager.GameState = GameState.MENU;
+          GameStateManager.GameState = GameState.PAUSED;
           break;
       }
     }

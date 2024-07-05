@@ -29,6 +29,9 @@ namespace GameProject.Services.Inputs
                 case GameState.PLAYING:
                     this._gamePanel.GetGame().GetPlaying().MouseClick(sender, e);
                     break;
+                case GameState.PAUSED:
+                    this._gamePanel.GetGame().GetPause().MouseClick(sender, e);
+                    break;
                 default:
                     break;
 
