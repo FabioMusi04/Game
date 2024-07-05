@@ -13,36 +13,13 @@ namespace GameProject.Utils
         public static string PLAYER_ATLAS = Application.StartupPath.ToString() + @"..\..\..\Res\NPC\hero.png";
         public static string LEVEL_ATLAS = Application.StartupPath.ToString() + @"..\..\..\Res\Tilesets\Tiles.png";
         public static string LEVEL_1_DATA = Application.StartupPath.ToString() + @"..\..\..\Res\Maps\Map1.png";
+        public static string MENU_BUTTONS = Application.StartupPath.ToString() + @"..\..\..\Res\UI\CurveFlatBtns.png";
+
         public static Bitmap GetSpriteAtlas(string path)
         {
             Bitmap img = new(path);
             return img;
         }
-
-        /* public static int[,] GetLevelData()
-        {
-            int[,] levelData = new int[GameSetup.TILES_IN_HEIGHT, GameSetup.TILES_IN_WIDTH];
-            Bitmap img = GetSpriteAtlas(LEVEL_1_DATA);
-            for (int i = 0; i < GameSetup.TILES_IN_HEIGHT; i++)
-            {
-                for (int j = 0; j < GameSetup.TILES_IN_WIDTH; j++)
-                {
-                    Color pixel = img.GetPixel(j, i);
-                    KeyValuePair<string, Color>? sprite = IsReferredToSprite(pixel);
-                    if(sprite != null)
-                    {
-                        levelData[i, j] = sprite.Value.Key switch
-                        {
-                            "Grass" => 73,
-                            "Water" => 551,
-                            "Player" => -1,
-                            _ => -1,
-                        };
-                    }
-                }
-            }
-            return levelData;
-        } */
         public static int[,] GetLevelData()
         {
             int[,] levelData = new int[GameSetup.TILES_IN_HEIGHT, GameSetup.TILES_IN_WIDTH];

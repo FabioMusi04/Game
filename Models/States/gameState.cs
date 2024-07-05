@@ -2,7 +2,7 @@ namespace GameProject.Services.States
 {
   public enum GameState
   {
-    PLAYING, MENU, PAUSED
+    PLAYING, MENU, PAUSED, OPTIONS, QUIT
   }
 
   public class GameStateManager

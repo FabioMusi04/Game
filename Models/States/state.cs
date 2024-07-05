@@ -1,4 +1,6 @@
+using System.Windows.Forms;
 using GameProject.Services.Game;
+using GameProject.Ui;
 
 namespace GameProject.Services.States
 {
@@ -8,7 +10,12 @@ namespace GameProject.Services.States
     public State(GameSetup gameSetup)
     {
       this._game = gameSetup;
-    }  
+    } 
+
+    public bool IsIn(MouseEventArgs e, MenuButton button)
+    {
+      return button.GetBounds().Contains(e.Location);
+    }
 
     public GameSetup GetGameSetup()
     {

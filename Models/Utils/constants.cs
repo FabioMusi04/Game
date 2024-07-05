@@ -1,10 +1,23 @@
 using System.Drawing;
 using System.Collections.Generic;
+using GameProject.Services.Game;
 
 namespace GameProject.Utils
 {
     public class Constants
     {
+        public static class UI 
+        {
+            public static class Button
+            {
+                public const int BUTTON_WIDTH_DEFAULT = 96;
+                public const int BUTTON_HEIGHT_DEFAULT = 32;
+                public const int BUTTON_HEIGHT = (int)(BUTTON_HEIGHT_DEFAULT * GameSetup.SCALE);
+                public const int BUTTON_WIDTH = (int)(BUTTON_WIDTH_DEFAULT * GameSetup.SCALE);
+                public const int BUTTON_SPRITES_DEFAULT_ROW = 9;
+                public const int BUTTON_SPRITES_DEFAULT_COLUMN = 4;
+            }
+        }
         public static class Directions
         {
             public const int DOWN = 0;

@@ -90,6 +90,11 @@ namespace GameProject.Services.Game
             case GameState.PAUSED:
                this._pause.Update();
                break;
+            case GameState.OPTIONS:
+               break;
+            case GameState.QUIT:
+               Application.Exit();
+               break;
             default:
                break;
          }
