@@ -21,10 +21,11 @@ namespace GameProject.Services.Window
         private void SetPanelSize()
         {
             Size size = new(GameSetup.GAME_WIDTH, GameSetup.GAME_HEIGHT);
+            //this.DoubleBuffered = true;
             this.SetStyle(
-                ControlStyles.AllPaintingInWmPaint |
-                ControlStyles.UserPaint |
-                ControlStyles.DoubleBuffer, true);
+               ControlStyles.AllPaintingInWmPaint |
+               ControlStyles.UserPaint |
+               ControlStyles.DoubleBuffer, true);
             this.Dock = DockStyle.Fill;
             this.MinimumSize = size;
             this.Size = size;
@@ -35,7 +36,7 @@ namespace GameProject.Services.Window
             base.OnPaint(e);
             this._game.Render(e);
         }
-        public void UpdateGame() 
+        public void UpdateGame()
         {
 
         }

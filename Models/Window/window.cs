@@ -15,7 +15,7 @@ namespace GameProject.Services.Window
             CreateWindow(gamePanel);
         }
 
-        [STAThread]
+        [MTAThread]
         public void CreateWindow(GamePanel gamePanel)
         {
             this.form = new Form
@@ -24,7 +24,7 @@ namespace GameProject.Services.Window
                 FormBorderStyle = FormBorderStyle.FixedSingle,
                 MaximizeBox = false,
                 MinimizeBox = true,
-                StartPosition = FormStartPosition.CenterScreen
+                StartPosition = FormStartPosition.CenterScreen,
             };
 
             this.form.Deactivate += (sender, e) =>

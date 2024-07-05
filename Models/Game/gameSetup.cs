@@ -24,7 +24,7 @@ namespace GameProject.Services.Game
       private Menu _menu;
 
       public const int TILES_DEAULT_SIZE = 16;
-      public const float SCALE = 2.0f;
+      public const float SCALE = 1.0f;
       public const int TILES_IN_WIDTH = 32;
       public const int TILES_IN_HEIGHT = 32;
       public const int TILE_SIZE = (int)(TILES_DEAULT_SIZE * SCALE);
