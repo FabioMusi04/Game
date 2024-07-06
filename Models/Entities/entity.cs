@@ -24,7 +24,7 @@ namespace GameProject.Services.Entities
             this._bounds.Width, 
             this._bounds.Height);
         }
-        public void InitHitBox(float x, float y, float width, float height)
+        public void InitHitBox(float x, float y, int width, int height)
         {
             this._bounds = new RectangleF(x, y, width, height);
         }

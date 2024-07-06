@@ -9,7 +9,7 @@ namespace GameProject.Ui
 {
   public class MenuButton
   {
-    private int _x, _y, _rowIndex, _index;
+    private int _x, _y, _index;
     private bool _mouseOver, _mousePress;
     private int xOffsetCenter = Constants.UI.Button.BUTTON_WIDTH / 2;
     private GameState _state;

@@ -14,6 +14,7 @@ namespace GameProject.Utils
         public static string LEVEL_ATLAS = Application.StartupPath.ToString() + @"..\..\..\Res\Tilesets\Tiles.png";
         public static string LEVEL_1_DATA = Application.StartupPath.ToString() + @"..\..\..\Res\Maps\Map1.png";
         public static string MENU_BUTTONS = Application.StartupPath.ToString() + @"..\..\..\Res\UI\CurveFlatBtns.png";
+        public static string MENU_BACKGROUND = Application.StartupPath.ToString() + @"..\..\..\Res\UI\MenuBackground.png";
 
         public static Bitmap GetSpriteAtlas(string path)
         {

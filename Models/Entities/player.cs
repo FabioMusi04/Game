@@ -11,7 +11,7 @@ namespace GameProject.Services.Entities
     public class Player : Entity
     {
         private Bitmap[,] animations;
-        private const float _playerSpeed = 0.5f;
+        private const float _playerSpeed = 0.5f * GameSetup.SCALE;
         //private const float playerAcceleration = 1.5f;
         private int _animationTick;
         private int _animationIndex;
@@ -86,7 +86,7 @@ namespace GameProject.Services.Entities
         public Player(float x, float y, int width, int height) : base(x, y, width, height)
         {
             LoadAnimations();
-            this.InitHitBox(this._x, this._y, 16 * GameSetup.SCALE, 32 * GameSetup.SCALE);
+            this.InitHitBox(this._x, this._y, (int)(16 * GameSetup.SCALE), (int)(32 * GameSetup.SCALE));
         }
 
         public void Update()

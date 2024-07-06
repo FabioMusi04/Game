@@ -43,24 +43,21 @@ namespace GameProject.Services.Levels
             });
         }
 
-         private void CreateLevelBitmap()
+        private void CreateLevelBitmap()
+        {
+            int width = GameSetup.TILES_IN_WIDTH * GameSetup.TILE_SIZE;
+            int height = GameSetup.TILES_IN_HEIGHT * GameSetup.TILE_SIZE;
+            _levelBitmap = new Bitmap(width, height);
+        }
+
+        private void DrawLevelBitmap()
+{
+    if (_levelSprite == null || _level == null || _levelBitmap == null)
+        return;
+
+    using (Graphics g = Graphics.FromImage(_levelBitmap))
     {
-        int width = GameSetup.TILES_IN_WIDTH * GameSetup.TILE_SIZE;
-        int height = GameSetup.TILES_IN_HEIGHT * GameSetup.TILE_SIZE;
-        _levelBitmap = new Bitmap(width, height);
-    }
-
-    private void DrawLevelBitmap()
-    {
-        if (_levelSprite == null || _level == null || _levelBitmap == null)
-            return;
-
-        Rectangle rect = new Rectangle(0, 0, _levelBitmap.Width, _levelBitmap.Height);
-        BitmapData levelData = _levelBitmap.LockBits(rect, ImageLockMode.WriteOnly, _levelBitmap.PixelFormat);
-
-        int bytesPerPixel = Image.GetPixelFormatSize(_levelBitmap.PixelFormat) / 8;
-        int stride = levelData.Stride;
-        byte[] levelBuffer = new byte[stride * _levelBitmap.Height];
+        g.Clear(Color.Transparent); // Clear the bitmap first
 
         for (int i = 0; i < GameSetup.TILES_IN_HEIGHT; i++)
         {
@@ -70,37 +67,28 @@ namespace GameProject.Services.Levels
                 if (spriteIndex != -1)
                 {
                     Bitmap sprite = _levelSprite[spriteIndex];
-                    Rectangle spriteRect = new(0, 0, sprite.Width, sprite.Height);
-                    BitmapData spriteData = sprite.LockBits(spriteRect, ImageLockMode.ReadOnly, sprite.PixelFormat);
+                    int x = (int)(j * GameSetup.TILES_DEAULT_SIZE * GameSetup.SCALE);
+                    int y = (int)(i * GameSetup.TILES_DEAULT_SIZE * GameSetup.SCALE);
+                    int width = (int)(sprite.Width * GameSetup.SCALE);
+                    int height = (int)(sprite.Height * GameSetup.SCALE);
 
-                    int spriteStride = spriteData.Stride;
-                    byte[] spriteBuffer = new byte[spriteStride * sprite.Height];
-                    Marshal.Copy(spriteData.Scan0, spriteBuffer, 0, spriteBuffer.Length);
-
-                    for (int y = 0; y < sprite.Height; y++)
-                    {
-                        int levelOffset = ((i * GameSetup.TILE_SIZE + y) * stride) + (j * GameSetup.TILE_SIZE * bytesPerPixel);
-                        int spriteOffset = y * spriteStride;
-                        Array.Copy(spriteBuffer, spriteOffset, levelBuffer, levelOffset, spriteStride);
-                    }
-
-                    sprite.UnlockBits(spriteData);
+                    g.DrawImage(sprite, x, y, width, height);
                 }
             }
         }
-
-        Marshal.Copy(levelBuffer, 0, levelData.Scan0, levelBuffer.Length);
-        _levelBitmap.UnlockBits(levelData);
     }
+}
 
-    public void Draw(Graphics g)
-    {
-        if (_levelBitmap == null)
-            CreateLevelBitmap();
 
-        DrawLevelBitmap();
-        g.DrawImage(_levelBitmap, 0, 0);
-    }
+
+        public void Draw(Graphics g)
+        {
+            if (_levelBitmap == null)
+                CreateLevelBitmap();
+
+            DrawLevelBitmap();
+            g.DrawImage(_levelBitmap, 0, 0);
+        }
 
         public Level GetCurrentLevelData()
         {
