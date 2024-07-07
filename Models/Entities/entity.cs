@@ -16,11 +16,11 @@ namespace GameProject.Services.Entities
             this._width = width;
             this._height = height;
         }
-        protected void DrawHitBox(Graphics g)
+        protected void DrawHitBox(Graphics g, int _xLvlOffset, int _yLvlOffset)
         {
             g.DrawRectangle(new Pen(Color.Red), 
-            this._bounds.X, 
-            this._bounds.Y, 
+            this._bounds.X - _xLvlOffset, 
+            this._bounds.Y - _yLvlOffset, 
             this._bounds.Width, 
             this._bounds.Height);
         }

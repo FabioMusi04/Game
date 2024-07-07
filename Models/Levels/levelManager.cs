@@ -1,11 +1,9 @@
 using GameProject.Services.Game;
 using GameProject.Utils;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+using System;
 
 namespace GameProject.Services.Levels
 {
@@ -50,43 +48,41 @@ namespace GameProject.Services.Levels
             _levelBitmap = new Bitmap(width, height);
         }
 
-        private void DrawLevelBitmap()
-{
-    if (_levelSprite == null || _level == null || _levelBitmap == null)
-        return;
-
-    using (Graphics g = Graphics.FromImage(_levelBitmap))
-    {
-        g.Clear(Color.Transparent); // Clear the bitmap first
-
-        for (int i = 0; i < GameSetup.TILES_IN_HEIGHT; i++)
+        private void DrawLevelBitmap(int _xLvlOffset, int _yLvlOffset)
         {
-            for (int j = 0; j < GameSetup.TILES_IN_WIDTH; j++)
-            {
-                int spriteIndex = _level.GetSpriteIndex(j, i);
-                if (spriteIndex != -1)
-                {
-                    Bitmap sprite = _levelSprite[spriteIndex];
-                    int x = (int)(j * GameSetup.TILES_DEAULT_SIZE * GameSetup.SCALE);
-                    int y = (int)(i * GameSetup.TILES_DEAULT_SIZE * GameSetup.SCALE);
-                    int width = (int)(sprite.Width * GameSetup.SCALE);
-                    int height = (int)(sprite.Height * GameSetup.SCALE);
+            if (_levelSprite == null || _level == null || _levelBitmap == null)
+                return;
 
-                    g.DrawImage(sprite, x, y, width, height);
+            using Graphics g = Graphics.FromImage(_levelBitmap);
+            g.Clear(Color.Transparent);
+
+            for (int i = 0; i < _level.GetLevelData().GetLength(0) ; i++)
+            {
+                for (int j = 0; j < _level.GetLevelData().GetLength(1); j++)
+                {
+                    int spriteIndex = _level.GetSpriteIndex(j, i);
+                    if (spriteIndex != -1)
+                    {
+                        Bitmap sprite = _levelSprite[spriteIndex];
+                        int x = j * GameSetup.TILE_SIZE - _xLvlOffset;
+                        int y = i * GameSetup.TILE_SIZE - _yLvlOffset;
+                        int width = GameSetup.TILE_SIZE;
+                        int height = GameSetup.TILE_SIZE;
+
+                        g.DrawImage(sprite, x, y, width, height);
+                    }
                 }
             }
         }
-    }
-}
 
 
 
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, int _xLvlOffset, int _yLvlOffset)
         {
             if (_levelBitmap == null)
                 CreateLevelBitmap();
 
-            DrawLevelBitmap();
+            DrawLevelBitmap(_xLvlOffset, _yLvlOffset);
             g.DrawImage(_levelBitmap, 0, 0);
         }
 

@@ -23,13 +23,14 @@ namespace GameProject.Utils
         }
         public static int[,] GetLevelData()
         {
-            int[,] levelData = new int[GameSetup.TILES_IN_HEIGHT, GameSetup.TILES_IN_WIDTH];
             Bitmap img = GetSpriteAtlas(LEVEL_1_DATA);
 
             BitmapData bmpData = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, img.PixelFormat);
             int bytesPerPixel = Bitmap.GetPixelFormatSize(img.PixelFormat) / 8;
             int height = img.Height;
             int width = img.Width;
+            int[,] levelData = new int[height, width];
+
             byte[] pixelData = new byte[bmpData.Stride * height];
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelData, 0, pixelData.Length);
             img.UnlockBits(bmpData);

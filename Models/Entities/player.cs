@@ -96,26 +96,26 @@ namespace GameProject.Services.Entities
             SetAnimation();
         }
 
-        public void Render(Graphics g)
+        public void Render(Graphics g, int _xLvlOffset, int _yLvlOffset)
         {
 
             if (this.Left || this._wasLeft)
             {
                 g.DrawImage(animations[this._animationIndex, this._playerAction],
-                (int)(this._bounds.X - _xDrawOffset) + this._width,
-                (int)(this._bounds.Y - _yDrawOffset),
+                (int)(this._bounds.X - _xDrawOffset) + this._width - _xLvlOffset,
+                (int)(this._bounds.Y - _yDrawOffset) - _yLvlOffset,
                 -this._width,
                 this._height);
             }
             else
             {
                 g.DrawImage(animations[this._animationIndex, this._playerAction],
-                (int)(this._bounds.X - _xDrawOffset),
-                (int)(this._bounds.Y - _yDrawOffset),
+                (int)(this._bounds.X - _xDrawOffset) - _xLvlOffset,
+                (int)(this._bounds.Y - _yDrawOffset) - _yLvlOffset,
                 this._width,
                 this._height);
             }
-            DrawHitBox(g);
+            DrawHitBox(g, _xLvlOffset, _yLvlOffset);
         }
 
         private void LoadAnimations()
@@ -157,21 +157,42 @@ namespace GameProject.Services.Entities
             int startAni = this._playerAction;
             if (_isMoving)
             {
-                if (Left)
+                Console.WriteLine(_left + " " + _right + " " + _up + " " + _down);
+                if (_left && !_right && !_up && !_down)
                 {
                     this._playerAction = PlayerConstants.RUNNING_LEFT;
                 }
-                else if (Right)
+                else if (_right && !_left && !_up && !_down)
                 {
                     this._playerAction = PlayerConstants.RUNNING_RIGHT;
                 }
-                else if (Up)
+                else if (_up && !_down && !_left && !_right)
                 {
                     this._playerAction = PlayerConstants.RUNNING_UP;
                 }
-                else if (Down)
+                else if (_down && !_up && !_left && !_right)
                 {
                     this._playerAction = PlayerConstants.RUNNING_DOWN;
+                }
+                else if (_left && _up && !_down && !_right)
+                {
+                    this._playerAction = PlayerConstants.IDLE_LEFT;
+                }
+                else if (_left && _down && !_up && !_right)
+                {
+                    this._playerAction = PlayerConstants.IDLE_LEFT;
+                }
+                else if (_right && _up && !_down && !_left)
+                {
+                    this._playerAction = PlayerConstants.IDLE_RIGHT;
+                }
+                else if (_right && _down && !_up && !_left)
+                {
+                    this._playerAction = PlayerConstants.IDLE_RIGHT;
+                }
+                else if (_up && _down && !_left && !_right) 
+                {
+                    this._playerAction = PlayerConstants.IDLE_DOWN;
                 }
             }
             else
@@ -193,7 +214,8 @@ namespace GameProject.Services.Entities
                     this._playerAction = PlayerConstants.IDLE_UP;
                 }
             }
-            if(this._attack) {
+            if (this._attack)
+            {
                 if (this._wasDown)
                 {
                     this._playerAction = PlayerConstants.ATTACKING_DOWN;
@@ -210,7 +232,8 @@ namespace GameProject.Services.Entities
                 {
                     this._playerAction = PlayerConstants.ATTACKING_UP;
                 }
-                else {
+                else
+                {
                     this._playerAction = PlayerConstants.ATTACKING_DOWN;
                 }
             }
